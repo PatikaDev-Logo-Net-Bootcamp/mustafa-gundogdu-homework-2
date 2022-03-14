@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using homework_2.Middlewares;
 
 namespace homework_2
 {
@@ -26,10 +27,10 @@ namespace homework_2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                c.OperationFilter<AddDefaultKeyHeaderParameter>(); // Versiyon kontrolü için swagger a appversion giriþi eklendi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "homework_2", Version = "v1" });
             });
         }
@@ -43,12 +44,13 @@ namespace homework_2
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "homework_2 v1"));
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseAppVersionMiddleware();  //Middleware kullanýmý yapýldý
 
             app.UseEndpoints(endpoints =>
             {
