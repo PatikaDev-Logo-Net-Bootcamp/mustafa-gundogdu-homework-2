@@ -19,17 +19,14 @@ namespace homework_2.Middlewares
         }
         public async Task Invoke(HttpContext httpContext,IConfiguration configuration)
         {
-
             try
             {
                 if (httpContext.Request.Path == "/login" || httpContext.Request.Path == "/register")
                 {
                     await _next(httpContext);
                 }
-
                 var currentVersion = new Version(configuration.GetValue<string>("AppVersion"));
-                var vers = httpContext.Request.Headers["AppVersion"];
-                var requestVersion = new Version(vers);
+                var requestVersion = new Version(httpContext.Request.Headers["AppVersion"]);
                 var checkVersion = currentVersion.CompareTo(requestVersion);
                 if (requestVersion != null)
                 {
@@ -62,7 +59,6 @@ namespace homework_2.Middlewares
         }
         private async Task HandleExceptionAsync(HttpContext httpContext,Exception exception,string message)
         {
-             
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await httpContext.Response.WriteAsync($"Internal Server Error! Detail : {message}");
         }

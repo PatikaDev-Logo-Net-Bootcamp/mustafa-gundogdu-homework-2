@@ -17,19 +17,19 @@ namespace homework_2.Controllers
         [Route("/login")]
         public IActionResult login()
         {
-            return Json(new {success=true , data="login httpget methot"});
+            return Json(new {success=true , data="login get methot"});
         }
 
         [HttpGet]
         [Route("/register")]
         public IActionResult register()
         {
-            return Json(new { success = true, data = "register httpget methot" });
+            return Json(new { success = true, data = "register get methot" });
         }
 
         [HttpPut]
         
-        [ApiExplorerSettings(IgnoreApi = true)] // We can hide this end point on swagger using this line
+        [ApiExplorerSettings(IgnoreApi = true)]  // We can hide this end point on swagger using this line
         
         public IActionResult test()
         {
